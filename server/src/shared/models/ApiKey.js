@@ -16,7 +16,7 @@ const apiKeySchema = new mongoose.Schema(
             index: true,
         },
         clientId: {
-            type: mongoose.Schema.Types.ObjectId, // 123
+            type: mongoose.Schema.Types.ObjectId,
             ref: 'Client',
             required: true,
             index: true,
