@@ -1,5 +1,5 @@
-import logger from "../config/logger";
-import ResponseFormatter from "../utils/responseFromatter";
+import logger from "../config/logger.js";
+import ResponseFormatter from "../utils/responseFormatter.js";
 
 const errorHandler = (err, req, res) => {
 

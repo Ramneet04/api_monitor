@@ -1,5 +1,3 @@
-// yaha pr basically ham global level ka config likhege!!
-
 import dotenv from "dotenv"
 
 dotenv.config()

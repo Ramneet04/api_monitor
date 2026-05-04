@@ -1,6 +1,6 @@
 import { APPLICATION_ROLES } from "../../../shared/constants/roles.js";
 import config from "../../../shared/config/index.js";
-import ResponseFormatter from "../../../shared/utils/responseFromatter.js";
+import ResponseFormatter from "../../../shared/utils/responseFormatter.js";
 export class AuthController {
     constructor(authService){
         if(!authService){

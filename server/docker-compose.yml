@@ -16,7 +16,7 @@ services:
       - api-monitoring-network
     restart: unless-stopped
     healthcheck:
-      test: ["executable", "pg_isready -U postgres -d api_monitoring"]
+      test: ["CMD-SHELL", "pg_isready -U ramneet -d api_monitoring"]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -69,6 +69,78 @@ services:
     depends_on:
       - postgres
       
+
+  api-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: api-monitoring-app
+    environment:
+      NODE_ENV: production
+      PORT: 5000
+      # MongoDB (local container)
+      MONGO_URI: mongodb://mongo:27017/api_monitoring
+      MONGO_DB_NAME: api_monitoring
+      # PostgreSQL (Docker container)
+      PG_HOST: postgres
+      PG_PORT: 5432
+      PG_DATABASE: api_monitoring
+      PG_USER: ramneet
+      PG_PASSWORD: ramneet04
+      # RabbitMQ (Docker container)
+      RABBITMQ_URL: amqp://ramneet:ramneet04@rabbitmq:5672/api_monitoring
+      RABBITMQ_QUEUE: api_hits
+      # Security
+      JWT_SECRET: ${JWT_SECRET}
+      JWT_EXPIRES_IN: 24h
+      # Rate Limiting
+      RATE_LIMIT_WINDOW_MS: 60000
+      RATE_LIMIT_MAX_REQUESTS: 100
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./logs:/app/logs
+    networks:
+      - api-monitoring-network
+    depends_on:
+      postgres:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+  consumer:
+    build:
+      context: .
+      dockerfile: Dockerfile.consumer
+    container_name: api-monitoring-consumer
+    environment:
+      NODE_ENV: production
+      MONGO_URI: mongodb://mongo:27017/api_monitoring
+      MONGO_DB_NAME: api_monitoring
+      PG_HOST: postgres
+      PG_PORT: 5432
+      PG_DATABASE: api_monitoring
+      PG_USER: ramneet
+      PG_PASSWORD: ramneet04
+      RABBITMQ_URL: amqp://ramneet:ramneet04@rabbitmq:5672/api_monitoring
+      RABBITMQ_QUEUE: api_hits
+      JWT_SECRET: ${JWT_SECRET}
+    volumes:
+      - ./logs:/app/logs
+    networks:
+      - api-monitoring-network
+    depends_on:
+      postgres:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+    restart: unless-stopped
+
 volumes:
   postgres_data:
     driver: local
