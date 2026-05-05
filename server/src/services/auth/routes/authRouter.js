@@ -14,4 +14,29 @@ const authController = controller.authController;
 
 router.post("/onboard-super-admin", requestLogger, validate(onboardSuperAdminSchema), (req,res,next) =>authController.onboardSuperAdmin(req,res,next));
 
+router.post("/register",
+    requestLogger,
+    authenticate,
+    authorize([APPLICATION_ROLES.SUPER_ADMIN]),
+    validate(registrationSchema),
+    (req, res, next) => authController.register(req, res, next)
+)
+
+router.post("/login",
+    requestLogger,
+    validate(loginSchema),
+    (req, res, next) => authController.login(req, res, next)
+);
+
+router.get("/profile",
+    requestLogger,
+    authenticate,
+    (req, res, next) => authController.getProfile(req, res, next)
+);
+
+router.get("/logout",
+    requestLogger,
+    (req, res, next) => authController.logout(req, res, next)
+)
+
 export default router;

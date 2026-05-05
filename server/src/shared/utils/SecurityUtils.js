@@ -12,7 +12,8 @@ class SecurityUtils  {
     static validatePassword(password) {
 
         const requirements = this.PASSWORD_REQUIREMENTS;
-
+        const errors = [];
+        
         if (!password) {
             return {
                 success: false,

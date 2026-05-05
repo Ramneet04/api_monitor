@@ -10,14 +10,17 @@ import errorHandler from './shared/middlewares/errorHandler.js';
 import ResponseFormatter from './shared/utils/responseFormatter.js';
 import cookieParser from "cookie-parser"
 
+import authRouter from "./services/auth/routes/authRouter.js"
 const app = express();
 
 app.use(helmet()); // helmet is used to set various HTTP headers for security purposes. It helps protect the app from common vulnerabilities by configuring headers like Content-Security-Policy, X-Content-Type-Options, and more. prevent cross site scripting, clickjacking, and other attacks.
-app.use(cors());
+app.use(cors({
+    origin: true,
+    credentials: true
+}));
 app.use(express.json()); // req.body() to parse JSON request bodies
 app.use(cookieParser()) 
 app.use(express.urlencoded({ extended: true }));
-
 
 app.use((req,res,next)=>{
     logger.info(`${req.method} ${req.path}`, {
@@ -57,6 +60,7 @@ app.get("/", (req, res) => {
         )
     )
 });
+app.use('/api/auth', authRouter);
 
 app.use((req, res) => {
     res.status(404).json(ResponseFormatter.error("Endpoint not found", 404))

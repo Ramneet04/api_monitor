@@ -7,15 +7,15 @@ class Container {
     static init(){
 
         const repositories = {
-            userRepository = MongoUserRepository
+            userRepository: MongoUserRepository
         }
 
         const services = {
-            authService = new AuthService(repositories.userRepository)
+            authService: new AuthService(repositories.userRepository)
         }
         
         const controller = {
-            authController = new AuthController(services.authService)
+            authController: new AuthController(services.authService)
         }
 
         return {
