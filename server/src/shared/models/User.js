@@ -66,7 +66,7 @@ const userSchema = new mongoose.Schema({
         type: Boolean,
         default: true
     },
-    Permissions: {
+    permissions: {
         canCreateApiKeys: {
             type: Boolean,
             default: false,

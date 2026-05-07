@@ -135,4 +135,17 @@ export class AuthService {
             throw error;
         }
     };
+
+    async checkSuperAdminPermissions(userId) {
+        try {
+            const user = await this.userRepository.findById(userId);
+            if (!user) {
+                throw new AppError("User not found", 404);
+            }
+
+            return user.role === APPLICATION_ROLES.SUPER_ADMIN
+        } catch (error) {
+
+        }
+    }
 }

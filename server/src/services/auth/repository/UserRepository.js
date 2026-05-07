@@ -8,8 +8,8 @@ class MongoUserRepository extends UserRepository {
     async create(userData){
         try {
             let data = {...userData};
-            if(data.role === "super_admin" && !data.Permissions){
-                data.Permissions = {
+            if(data.role === "super_admin" && !data.permissions){
+                data.permissions = {
                     canCreateApiKeys: true,
                     canManageUsers: true,
                     canViewAnalytics: true,
