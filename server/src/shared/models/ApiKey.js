@@ -55,7 +55,7 @@ const apiKeySchema = new mongoose.Schema(
                 trim: true,
             }],
         },
-        // usage and per-key rate limiting removed
+        
         security: {
             allowedIPs: [{
                 type: String,
