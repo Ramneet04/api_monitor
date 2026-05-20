@@ -13,6 +13,7 @@ import cookieParser from "cookie-parser"
 import authRouter from "./services/auth/routes/authRouter.js"
 import clientRouter from './services/client/routes/clientRoutes.js';
 import ingestRouter from './services/ingest/routes/ingestRoutes.js';
+import analyticsRouter from './services/analytics/routes/analyticsRoutes.js';
 const app = express();
 
 app.use(helmet()); // helmet is used to set various HTTP headers for security purposes. It helps protect the app from common vulnerabilities by configuring headers like Content-Security-Policy, X-Content-Type-Options, and more. prevent cross site scripting, clickjacking, and other attacks.
@@ -64,6 +65,7 @@ app.get("/", (req, res) => {
 });
 app.use('/api/auth', authRouter);
 app.use('/api/hit', ingestRouter);
+app.use('/api/analytics', analyticsRouter);
 app.use('/api', clientRouter);
 
 app.use((req, res) => {

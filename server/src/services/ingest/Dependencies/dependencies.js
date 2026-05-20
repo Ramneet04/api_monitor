@@ -9,11 +9,11 @@ class Container{
         const eventProducer = createEventProducer();
 
         const services = {
-            ingestService = new IngestService({eventProducer})
+            ingestService: new IngestService({eventProducer})
         }
 
         const controllers = {
-            ingestController = new IngestController(services)
+            ingestController: new IngestController(services)
         }
         return {services, controllers}
     }

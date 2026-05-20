@@ -1,6 +1,6 @@
 import express from 'express';
 import ingestContainer from '../Dependencies/dependencies.js';
-import validateApiKey from '../../../shared/middleware/validateApiKey.js';
+import validateApiKey from '../../../shared/middlewares/validateApiKey.js';
 import rateLimit from 'express-rate-limit';
 import config from '../../../shared/config/index.js';
 
