@@ -1,5 +1,6 @@
 import config from "../../../shared/config/index.js";
 import AppError from "../../../shared/utils/AppError.js";
+import { APPLICATION_ROLES } from "../../../shared/constants/roles.js";
 import jwt from "jsonwebtoken";
 import logger from "../../../shared/config/logger.js"
 import bcrypt from "bcryptjs";

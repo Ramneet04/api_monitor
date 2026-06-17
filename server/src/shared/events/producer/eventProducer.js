@@ -27,7 +27,7 @@ export class EventProducer {
         this._metrics[metric] = (this._metrics[metric] || 0) + 1
     };
 
-    async publishApiHit(eventData, otps={}){
+    async publishApiHit(eventData, opts = {}){
         if(this._shuttingDown){
             const error = new Error("EventProducer is shutting down");
             error.code = 'SHUTDOWN_IN_PROGRESS';
@@ -37,7 +37,7 @@ export class EventProducer {
             throw error;
         }
 
-        if(!this._circuitBreaker.allowsRequest()){
+        if(!this._circuitBreaker.allowRequest()){
             this._logger.info('[EventProducer] circuit breaker rejected publish', {
                 eventId: eventData.eventId,
                 state: this._circuitBreaker.state,

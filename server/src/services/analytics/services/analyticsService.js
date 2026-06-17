@@ -1,4 +1,6 @@
 
+import logger from '../../../shared/config/logger.js';
+
 export class AnalyticsService {
     constructor(metricsRepo) {
         if (!metricsRepo) throw new Error("AnalyticsService requires a metricsRepository")
